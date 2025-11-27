@@ -1,0 +1,33 @@
+Bastien's protocols
+================
+
+Welcome! This site collects protocols used in our lab.
+
+.. image:: _static/header.png
+   :alt: Lab header image
+   :class: header-image
+   :align: center
+
+.. raw:: html
+
+   <br><br>
+   
+.. toctree::
+   :caption: Histology
+   :maxdepth: 1
+
+   histology/trichrome
+   histology/immunostaining
+
+.. toctree::
+   :caption: General Lab Maintenance
+   :maxdepth: 1
+
+   general/cleaning
+   general/freezer-checks
+
+.. toctree::
+   :caption: Image Analysis
+   :maxdepth: 1
+
+   image-analysis/blender_tracking

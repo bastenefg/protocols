@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blender Image Tracking Tutorial &mdash; My protocols 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Freezer Temperature Checks" href="../general/freezer-checks.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            My protocols
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Histology</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../histology/trichrome.html">In-House Trichrome Staining Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../histology/immunostaining.html">Immunostaining Protocol</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">General Lab Maintenance</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/cleaning.html">Cleaning Bench Surfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/freezer-checks.html">Freezer Temperature Checks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Image Analysis</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Blender Image Tracking Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#software-and-files">Software and Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#step-0-setup">Step 0 – Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-1-tracking-points-in-blender">Step 1 – Tracking Points in Blender</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2-exporting-displacements-to-csv">Step 2 – Exporting Displacements to CSV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-scripts">Python Scripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#csv-export-script-exportcsv-py">CSV Export Script (<code class="docutils literal notranslate"><span class="pre">exportCSV.py</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optional-object-cleanup-script">Optional Object Cleanup Script</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#csv-export-produces-more-files-than-expected">CSV Export Produces More Files Than Expected</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#notes">Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-files">Download Files</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">My protocols</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Blender Image Tracking Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/image-analysis/blender_tracking.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="blender-image-tracking-tutorial">
+<h1>Blender Image Tracking Tutorial<a class="headerlink" href="#blender-image-tracking-tutorial" title="Link to this heading"></a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This tutorial describes how to track points in a video using Blender and export
+their positions to CSV files for downstream analysis.</p>
+</div>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<section id="software-and-files">
+<h3>Software and Files<a class="headerlink" href="#software-and-files" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Blender (download from the official Blender website).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">displacement_tracking.blend</span></code> Blender file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">exportCSV.py</span></code> script.</p></li>
+<li><p>A folder named <code class="docutils literal notranslate"><span class="pre">data</span></code> (or custom export folder) to store CSV output.</p></li>
+<li><p>The video file to analyze.</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Keep all files (<code class="docutils literal notranslate"><span class="pre">.blend</span></code>, <code class="docutils literal notranslate"><span class="pre">.py</span></code>, and your video) in a clearly organized
+project directory so paths are easy to manage.</p>
+</div>
+</section>
+</section>
+<section id="step-0-setup">
+<h2>Step 0 – Setup<a class="headerlink" href="#step-0-setup" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Install Blender and verify it runs on your system.</p></li>
+<li><p>Place the following in your working folder:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">displacement_tracking.blend</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">exportCSV.py</span></code></p></li>
+<li><p>Your video file</p></li>
+<li><p>A subfolder named <code class="docutils literal notranslate"><span class="pre">data</span></code> (for CSV exports)</p></li>
+</ul>
+</li>
+<li><p>Open Blender and confirm that you can load the <code class="docutils literal notranslate"><span class="pre">displacement_tracking.blend</span></code> file.</p></li>
+</ol>
+</section>
+<section id="step-1-tracking-points-in-blender">
+<h2>Step 1 – Tracking Points in Blender<a class="headerlink" href="#step-1-tracking-points-in-blender" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Open Blender and load the project file:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">File</span> <span class="pre">→</span> <span class="pre">Open</span></code> → select <code class="docutils literal notranslate"><span class="pre">displacement_tracking.blend</span></code>.</p></li>
+</ul>
+</li>
+<li><p>Switch to the <em>Movie Clip Editor</em> and load your video:</p>
+<ul class="simple">
+<li><p>Click <strong>Open</strong> and select your video.</p></li>
+<li><p>The video should now appear in the editor.</p></li>
+</ul>
+</li>
+<li><p>Define the frame range:</p>
+<ul class="simple">
+<li><p>If you only want to analyze part of the video, adjust <strong>Start</strong> and <strong>End</strong> frames.</p></li>
+<li><p>Use <strong>Set Scene Frames</strong> to sync the scene’s frame range to your selection.</p></li>
+</ul>
+</li>
+<li><p>Navigate the video:</p>
+<ul class="simple">
+<li><p>Use the mouse scroll wheel to change zoom level.</p></li>
+<li><p>Use the middle mouse button to pan/move the view.</p></li>
+</ul>
+</li>
+<li><p>Add tracking markers:</p>
+<ul class="simple">
+<li><p>Use <strong>Markers → Add</strong> (or the equivalent “Add” button).</p></li>
+<li><p>Click once on the point in the video you want a marker to follow.</p></li>
+<li><p>After placing it, you can reposition the marker while it is selected
+(the square should appear white).</p></li>
+</ul>
+</li>
+<li><p>Track the marker over time:</p>
+<ul class="simple">
+<li><p>With the marker selected, choose <strong>Track → Track Forward</strong>.</p></li>
+<li><p>Wait for Blender to iterate through all frames.</p></li>
+</ul>
+</li>
+<li><p>Repeat as needed:</p>
+<ul class="simple">
+<li><p>Rewind to the start of the video.</p></li>
+<li><p>Add and track additional markers, one at a time.</p></li>
+<li><p>Adjust tracking settings if more robust tracking is needed.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="step-2-exporting-displacements-to-csv">
+<h2>Step 2 – Exporting Displacements to CSV<a class="headerlink" href="#step-2-exporting-displacements-to-csv" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Once all desired markers are tracked, switch to the <strong>Scripting</strong> workspace
+at the top of the Blender window.</p></li>
+<li><p>Locate or open the text editor inside Blender’s Scripting workspace.</p></li>
+<li><p>Load the export script:</p>
+<ul class="simple">
+<li><p>Either copy–paste the contents of <code class="docutils literal notranslate"><span class="pre">exportCSV.py</span></code> into a new text block, or</p></li>
+<li><p>Use <strong>Open</strong> in the text editor to load the existing <code class="docutils literal notranslate"><span class="pre">exportCSV.py</span></code> file.</p></li>
+</ul>
+</li>
+<li><p>Ensure there is a folder named <code class="docutils literal notranslate"><span class="pre">data</span></code> in your current working directory:</p>
+<ul class="simple">
+<li><p>By default, the script writes CSV files into a <code class="docutils literal notranslate"><span class="pre">data/</span></code> subfolder.</p></li>
+</ul>
+</li>
+<li><p>Run the script:</p>
+<ul class="simple">
+<li><p>In the Blender text editor, click <strong>Run Script</strong>.</p></li>
+<li><p>The script will loop over all movie clips and tracks and create one CSV per track.</p></li>
+</ul>
+</li>
+<li><p>Confirm that output files were created:</p>
+<ul class="simple">
+<li><p>Each file is named like <code class="docutils literal notranslate"><span class="pre">tracking_&lt;clipname&gt;_&lt;trackname&gt;.csv</span></code>.</p></li>
+<li><p>Columns are: <strong>X, Y, frame_number</strong>, where X and Y are in <strong>pixel coordinates</strong>.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="python-scripts">
+<h2>Python Scripts<a class="headerlink" href="#python-scripts" title="Link to this heading"></a></h2>
+<section id="csv-export-script-exportcsv-py">
+<h3>CSV Export Script (<code class="docutils literal notranslate"><span class="pre">exportCSV.py</span></code>)<a class="headerlink" href="#csv-export-script-exportcsv-py" title="Link to this heading"></a></h3>
+<p>The script below iterates through all loaded movie clips and tracking tracks, and
+exports marker positions as CSV files in the <code class="docutils literal notranslate"><span class="pre">data</span></code> folder.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">bpy</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span>
+
+<span class="k">for</span> <span class="n">clip</span> <span class="ow">in</span> <span class="n">D</span><span class="o">.</span><span class="n">movieclips</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">track</span> <span class="ow">in</span> <span class="n">clip</span><span class="o">.</span><span class="n">tracking</span><span class="o">.</span><span class="n">tracks</span><span class="p">:</span>
+        <span class="n">fn</span> <span class="o">=</span> <span class="s1">&#39;data/tracking_</span><span class="si">{0}</span><span class="s1">_</span><span class="si">{1}</span><span class="s1">.csv&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">clip</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">track</span><span class="o">.</span><span class="n">name</span>
+        <span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">frameno</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">markerAtFrame</span> <span class="o">=</span> <span class="n">track</span><span class="o">.</span><span class="n">markers</span><span class="o">.</span><span class="n">find_frame</span><span class="p">(</span><span class="n">frameno</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">markerAtFrame</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="n">frameno</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">coords</span> <span class="o">=</span> <span class="n">markerAtFrame</span><span class="o">.</span><span class="n">co</span><span class="o">.</span><span class="n">xy</span>
+                <span class="c1"># Convert normalized coordinates to pixels</span>
+                <span class="n">x_px</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">clip</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">y_px</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">clip</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">,</span><span class="si">{1}</span><span class="s1">,</span><span class="si">{2}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_px</span><span class="p">,</span> <span class="n">y_px</span><span class="p">,</span> <span class="n">frameno</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="optional-object-cleanup-script">
+<h3>Optional Object Cleanup Script<a class="headerlink" href="#optional-object-cleanup-script" title="Link to this heading"></a></h3>
+<p>The following snippet shows how to deselect all objects and delete the camera
+object from the scene (example of scripting basic scene operations):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">bpy</span>
+
+<span class="c1"># Deselect all objects</span>
+<span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">select_all</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;DESELECT&#39;</span><span class="p">)</span>
+
+<span class="c1"># Select the camera (Blender 2.7x syntax)</span>
+<span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="s1">&#39;Camera&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">select</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># Delete the selected object(s)</span>
+<span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<section id="csv-export-produces-more-files-than-expected">
+<h3>CSV Export Produces More Files Than Expected<a class="headerlink" href="#csv-export-produces-more-files-than-expected" title="Link to this heading"></a></h3>
+<p><strong>Problem:</strong>
+The export script outputs more CSV files than the number of tracking points you
+created for your current video.</p>
+<p><strong>Likely Cause:</strong>
+Movie clips or tracking data from previous sessions are still loaded in Blender.</p>
+<p><strong>Solution:</strong></p>
+<ol class="arabic">
+<li><p>List all loaded movie clips in the Python console:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">bpy</span>
+<span class="k">for</span> <span class="n">clip</span> <span class="ow">in</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">movieclips</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">clip</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Remove unwanted clips by name:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">bpy</span>
+<span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">movieclips</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span>
+    <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">movieclips</span><span class="p">[</span><span class="s2">&quot;your_clip_name&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Re-run the <code class="docutils literal notranslate"><span class="pre">exportCSV.py</span></code> script after cleaning up the unused clips.</p></li>
+</ol>
+</section>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Always verify that your <strong>frame range</strong> (Start/End) matches the video portion
+you intend to analyze.</p></li>
+<li><p>If tracking fails or jumps, consider improving contrast, adjusting tracking
+settings, or manually correcting markers before exporting.</p></li>
+<li><p>The exported CSV files are suitable for downstream processing in Python,
+MATLAB, Excel, or other analysis tools.</p></li>
+</ul>
+</section>
+<section id="download-files">
+<h2>Download Files<a class="headerlink" href="#download-files" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="files/image-analysis/displacement_tracking.blend">displacement_tracking.blend</a></p></li>
+<li><p><a class="reference external" href="files/image-analysis/exportCSV.py">exportCSV.py</a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../general/freezer-checks.html" class="btn btn-neutral float-left" title="Freezer Temperature Checks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, BastienFG.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
