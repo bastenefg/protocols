@@ -1,0 +1,22 @@
+Basic Tissue Culture Workflow
+=============================
+
+Overview
+--------
+
+This protocol describes routine passaging of adherent cells.
+
+Materials
+---------
+
+- Sterile tissue culture hood
+- Appropriate media
+- PBS, trypsin, etc.
+
+Protocol
+--------
+
+1. Warm media and reagents to 37°C.
+2. Aspirate old media from the flask.
+3. Wash with PBS, add trypsin, and incubate briefly.
+4. Neutralize with media and reseed into new flasks.
