@@ -24,7 +24,7 @@ Welcome! This site collects protocols used in our lab.
    :maxdepth: 1
 
    general/cleaning
-   general/freezer-checks
+   general/pipette_calibration
 
 .. toctree::
    :caption: Image Analysis
