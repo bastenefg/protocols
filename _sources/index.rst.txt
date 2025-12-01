@@ -1,7 +1,7 @@
 Bastien's protocols
 ================
 
-Welcome! This site collects protocols used in our lab.
+Welcome! This site collects protocols developed for my research over the years. Feel free to reach out to baymon[at]mit.edu for any questions or feedback.
 
 .. image:: _static/header.png
    :alt: Lab header image
